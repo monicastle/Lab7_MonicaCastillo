@@ -22,6 +22,9 @@ public class AdminArchivo {
     private ArrayList<Archivo> listaarchivos = new ArrayList();
     private File archivo = null;
 
+    public AdminArchivo() {
+    }
+
     public AdminArchivo(String path) {
         archivo = new File(path);
     }
@@ -58,13 +61,11 @@ public class AdminArchivo {
                         listaarchivos.add(temp);
                     }
                 } catch (EOFException ex) {
-                    ex.printStackTrace();
                 }
                 objeto.close();
                 entrada.close();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

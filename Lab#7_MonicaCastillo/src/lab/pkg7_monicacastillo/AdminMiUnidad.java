@@ -17,24 +17,21 @@ import java.util.ArrayList;
  *
  * @author Monica
  */
-public class AdminCarpeta {
+public class AdminMiUnidad {
 
-    private ArrayList<Carpeta> listacarpetas = new ArrayList();
+    private ArrayList objetos = new ArrayList();
     private File archivo = null;
 
-    public AdminCarpeta() {
-    }
-
-    public AdminCarpeta(String path) {
+    public AdminMiUnidad(String path) {
         archivo = new File(path);
     }
 
-    public ArrayList<Carpeta> getListacarpetas() {
-        return listacarpetas;
+    public ArrayList getObjetos() {
+        return objetos;
     }
 
-    public void setListacarpetas(ArrayList<Carpeta> listacarpetas) {
-        this.listacarpetas = listacarpetas;
+    public void setObjetos(ArrayList objetos) {
+        this.objetos = objetos;
     }
 
     public File getArchivo() {
@@ -45,27 +42,30 @@ public class AdminCarpeta {
         this.archivo = archivo;
     }
 
-    public void SetCarpeta(Carpeta c) {
-        this.listacarpetas.add(c);
+    public void setObject(Object o) {
+        this.objetos.add(o);
     }
 
     public void cargarArchivo() {
         try {
-            listacarpetas = new ArrayList();
-            Carpeta temp;
+            objetos = new ArrayList();
+            Object temp;
             if (archivo.exists()) {
-                FileInputStream entrada = new FileInputStream(archivo);
-                ObjectInputStream objeto = new ObjectInputStream(entrada);
+                FileInputStream entrada
+                        = new FileInputStream(archivo);
+                ObjectInputStream objeto
+                        = new ObjectInputStream(entrada);
                 try {
-                    while ((temp = (Carpeta) objeto.readObject()) != null) {
-                        listacarpetas.add(temp);
+                    while ((temp = (Object) objeto.readObject()) != null) {
+                        objetos.add(temp);
                     }
-                } catch (EOFException ex) {
+                } catch (EOFException e) {
                 }
                 objeto.close();
                 entrada.close();
-            }
+            } //fin if           
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -75,18 +75,16 @@ public class AdminCarpeta {
         try {
             fw = new FileOutputStream(archivo);
             bw = new ObjectOutputStream(fw);
-            for (Carpeta t : listacarpetas) {
+            for (Object t : objetos) {
                 bw.writeObject(t);
             }
             bw.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 bw.close();
                 fw.close();
             } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
     }

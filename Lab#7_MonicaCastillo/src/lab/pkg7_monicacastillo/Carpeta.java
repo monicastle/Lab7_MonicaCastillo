@@ -18,7 +18,7 @@ public class Carpeta implements Serializable {
     private String link;
     private ArrayList<Archivo> archivos = new ArrayList();
     private ArrayList<Carpeta> carpetas = new ArrayList();
-    private static final long SerialVersionUID = 777L;
+    private static final long SerialVersionUID = 555L;
 
     public Carpeta() {
     }
@@ -70,6 +70,6 @@ public class Carpeta implements Serializable {
 
     @Override
     public String toString() {
-        return "Nombre: " + nombre + ", Link: " + link;
+        return "Nombre: " + nombre;
     }
 }

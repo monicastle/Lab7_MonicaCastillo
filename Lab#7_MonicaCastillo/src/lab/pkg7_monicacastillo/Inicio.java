@@ -25,6 +25,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -61,9 +62,11 @@ public class Inicio extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         CBCarpetasC = new javax.swing.JComboBox<>();
         BotonMeterCarpetaACarpeta = new javax.swing.JButton();
+        BotonRegresar = new javax.swing.JButton();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         BarraCargar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        Lista = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuMiUnidad = new javax.swing.JMenu();
         MenuDestacados = new javax.swing.JMenu();
@@ -139,6 +142,13 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        BotonRegresar.setText("Regresar");
+        BotonRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BotonRegresarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout VentanaAgregarLayout = new javax.swing.GroupLayout(VentanaAgregar.getContentPane());
         VentanaAgregar.getContentPane().setLayout(VentanaAgregarLayout);
         VentanaAgregarLayout.setHorizontalGroup(
@@ -201,12 +211,15 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
+                        .addComponent(BotonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(51, 51, 51))))
         );
@@ -252,14 +265,15 @@ public class Inicio extends javax.swing.JFrame {
                 .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(BotonMeterCarpetaACarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
                 .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CBCarpetasA, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(20, 20, 20)
-                .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -270,8 +284,8 @@ public class Inicio extends javax.swing.JFrame {
         BarraCargar.setString("");
         BarraCargar.setStringPainted(true);
 
-        jList1.setModel(new DefaultListModel());
-        jScrollPane1.setViewportView(jList1);
+        Lista.setModel(new DefaultListModel());
+        jScrollPane1.setViewportView(Lista);
 
         MenuMiUnidad.setText("Mi Unidad");
         MenuMiUnidad.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -353,12 +367,15 @@ public class Inicio extends javax.swing.JFrame {
             tamaño = Double.parseDouble(TamañoArchivo.getText());
             String linkfinal = "dive.google.com/" + link;
             Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
-            MiUnidad.add(arch);
             aa = new AdminArchivo("./Almacenimiento.mc");
             aa.cargarArchivo();
             aa.SetArchivo(arch);
             aa.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Archivo creado exitosamente");
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.setObject(arch);
+            au.escribirArchivo();
             NombreArchivo.setText("");
             ExtensionArchivo.setSelectedIndex(0);
             TamañoArchivo.setText("");
@@ -389,13 +406,17 @@ public class Inicio extends javax.swing.JFrame {
             nombrecarp = carpetaselected.getNombre();
             String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
             Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
-            carpetaselected.SetArchivo(arch);
-            MiUnidad.add(arch);
             aa = new AdminArchivo("./Almacenimiento.mc");
             aa.cargarArchivo();
             aa.SetArchivo(arch);
             aa.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Archivo creado exitosamente");
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.setObject(arch);
+            au.escribirArchivo();
+            carpetaselected.SetArchivo(arch);
+            MiUnidad.add(arch);
             NombreArchivo.setText("");
             ExtensionArchivo.setSelectedIndex(0);
             TamañoArchivo.setText("");
@@ -408,6 +429,12 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             BarraCargar.setString("Mi Unidad");
+            DefaultComboBoxModel list = (DefaultComboBoxModel) Lista.getModel();
+            au.cargarArchivo();
+            for (Object ob : au.getObjetos()) {
+                list.addElement(ob);
+            }
+            Lista.setModel(list);
         } catch (Exception e) {
             e.printStackTrace();
         } // Fin Try Catch
@@ -461,18 +488,22 @@ public class Inicio extends javax.swing.JFrame {
             } // Fin For
             String linkfinal = "dive.google.com/" + link;
             Carpeta carp = new Carpeta(nombre, linkfinal);
-            DefaultComboBoxModel car = (DefaultComboBoxModel) CBCarpetasC.getModel();
-            DefaultComboBoxModel car2 = (DefaultComboBoxModel) CBCarpetasA.getModel();
-            car.addElement(carp);
-            car.addElement(carp);
-            CBCarpetasC.setModel(car);
-            CBCarpetasA.setModel(car2);
-            MiUnidad.add(carp);
             ac = new AdminCarpeta("./Almacenimiento.mc");
             ac.cargarArchivo();
             ac.SetCarpeta(carp);
             ac.escribirArchivo();
+            DefaultComboBoxModel car = (DefaultComboBoxModel) CBCarpetasC.getModel();
+            DefaultComboBoxModel car2 = (DefaultComboBoxModel) CBCarpetasA.getModel();
+            car.addElement(carp);
+            car2.addElement(carp);
+            CBCarpetasC.setModel(car);
+            CBCarpetasA.setModel(car2);
+            MiUnidad.add(carp);
             JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.setObject(carp);
+            au.escribirArchivo();
             NombreCarpeta.setText("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -481,7 +512,50 @@ public class Inicio extends javax.swing.JFrame {
 
     private void BotonMeterCarpetaACarpetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMeterCarpetaACarpetaMouseClicked
         // TODO add your handling code here:
+        try {
+            String nombre;
+            nombre = NombreCarpeta.getText();
+            String link = "";
+            carpetaselected = (Carpeta) CBCarpetasC.getSelectedItem();
+            for (int i = 0; i < 5; i++) {
+                if (i == 0 || i == 4) {
+                    link += (char) (97 + random.nextInt(26));
+                } else if (i == 1 || i == 3) {
+                    link += (char) (65 + random.nextInt(26));
+                } else {
+                    link += (char) (48 + random.nextInt(10));
+                } // Fin If          
+            } // Fin For
+            String nombrecarp;
+            nombrecarp = carpetaselected.getNombre();
+            String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
+            Carpeta carp = new Carpeta(nombre, linkfinal);
+            carpetaselected.SetCarpeta(carp);
+            MiUnidad.add(carp);
+            ac = new AdminCarpeta("./Almacenimiento.mc");
+            ac.cargarArchivo();
+            ac.SetCarpeta(carp);
+            ac.escribirArchivo();
+            JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.setObject(carp);
+            au.escribirArchivo();
+            NombreCarpeta.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
     }//GEN-LAST:event_BotonMeterCarpetaACarpetaMouseClicked
+
+    private void BotonRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonRegresarMouseClicked
+        // TODO add your handling code here:
+        try {
+            VentanaAgregar.setVisible(false);
+            this.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_BotonRegresarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -532,9 +606,11 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton BotonCrearCarpeta;
     private javax.swing.JButton BotonMeterArchivoCarpeta;
     private javax.swing.JButton BotonMeterCarpetaACarpeta;
+    private javax.swing.JButton BotonRegresar;
     private javax.swing.JComboBox<String> CBCarpetasA;
     private javax.swing.JComboBox<String> CBCarpetasC;
     private javax.swing.JComboBox<String> ExtensionArchivo;
+    private javax.swing.JList<String> Lista;
     private javax.swing.JMenu MenuAgregar;
     private javax.swing.JMenu MenuDestacados;
     private javax.swing.JMenu MenuMiUnidad;
@@ -557,13 +633,14 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 private ArrayList MiUnidad = new ArrayList();
     private AdminArchivo aa;
     private AdminCarpeta ac;
+    private AdminMiUnidad au;
     private Carpeta carpetaselected;
 
 }
