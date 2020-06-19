@@ -60,6 +60,14 @@ public class Carpeta implements Serializable {
         this.carpetas = carpetas;
     }
 
+    public void SetArchivo(Archivo arch) {
+        this.archivos.add(arch);
+    }
+
+    public void SetCarpeta(Carpeta carp) {
+        this.carpetas.add(carp);
+    }
+
     @Override
     public String toString() {
         return "Nombre: " + nombre + ", Link: " + link;

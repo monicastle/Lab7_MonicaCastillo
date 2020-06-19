@@ -7,7 +7,10 @@ package lab.pkg7_monicacastillo;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,6 +49,18 @@ public class Inicio extends javax.swing.JFrame {
         NombreCarpeta = new javax.swing.JTextField();
         BotonArchivoIndependiente = new javax.swing.JButton();
         BotonMeterArchivoCarpeta = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        CBCarpetasA = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        BotonCrearCarpeta = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        CBCarpetasC = new javax.swing.JComboBox<>();
+        BotonMeterCarpetaACarpeta = new javax.swing.JButton();
         BarraCargar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -90,6 +105,40 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Asignar a Carpeta");
+
+        jLabel8.setText("________________________________________________________");
+
+        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel9.setText("*Aqui solo se crean archivos solos*");
+
+        jLabel10.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel10.setText("*Aqui se puede meter un archivo a una carpeta*");
+
+        BotonCrearCarpeta.setText("Crear Carpeta");
+        BotonCrearCarpeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BotonCrearCarpetaMouseClicked(evt);
+            }
+        });
+
+        jLabel11.setText("____________________________________________________");
+
+        jLabel12.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel12.setText("*Aqui se crean carpetas sin nada dentro*");
+
+        jLabel13.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel13.setText("*Aqui se puede meter una carpeta dentro de otra*");
+
+        jLabel14.setText("Asignar a Carpeta");
+
+        BotonMeterCarpetaACarpeta.setText("Meter Carpeta a Carpeta");
+        BotonMeterCarpetaACarpeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BotonMeterCarpetaACarpetaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout VentanaAgregarLayout = new javax.swing.GroupLayout(VentanaAgregar.getContentPane());
         VentanaAgregar.getContentPane().setLayout(VentanaAgregarLayout);
         VentanaAgregarLayout.setHorizontalGroup(
@@ -99,29 +148,67 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(114, 114, 114))
+                .addGap(99, 99, 99))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(NombreCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(34, 34, 34)
-                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TamañoArchivo)
-                    .addComponent(NombreArchivo)
-                    .addComponent(ExtensionArchivo, 0, 232, Short.MAX_VALUE))
-                .addGap(27, 27, 27))
+                    .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                        .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(NombreCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                                .addGap(114, 114, 114)
+                                .addComponent(BotonCrearCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel13))
+                            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel14)
+                                .addGap(18, 18, 18)
+                                .addComponent(CBCarpetasC, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(BotonMeterCarpetaACarpeta)
+                        .addGap(63, 63, 63)))
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CBCarpetasA, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                        .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(34, 34, 34)
+                        .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TamañoArchivo)
+                            .addComponent(NombreArchivo)
+                            .addComponent(ExtensionArchivo, 0, 232, Short.MAX_VALUE)
+                            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(BotonArchivoIndependiente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+            .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                .addComponent(jLabel11)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BotonArchivoIndependiente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VentanaAgregarLayout.createSequentialGroup()
+                        .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51))))
         );
         VentanaAgregarLayout.setVerticalGroup(
             VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,19 +223,44 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(NombreArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NombreCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(ExtensionArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(ExtensionArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(VentanaAgregarLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(BotonCrearCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addGap(8, 8, 8)
                 .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(TamañoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TamañoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addGap(18, 18, 18)
-                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BotonArchivoIndependiente, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonArchivoIndependiente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(CBCarpetasC, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(BotonMeterCarpetaACarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(jLabel10)
+                .addGap(18, 18, 18)
+                .addGroup(VentanaAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CBCarpetasA, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(20, 20, 20)
+                .addComponent(BotonMeterArchivoCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -223,17 +335,73 @@ public class Inicio extends javax.swing.JFrame {
 
     private void BotonArchivoIndependienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonArchivoIndependienteMouseClicked
         // TODO add your handling code here:
-        String link = "";
-        for (int i = 0; i < 10; i++) {
-//            if (i == 2 && i == 5 && i == 8) {
-                link += (char) 97 + random.nextInt(26);
-//            } 
-        } // Fin For
-        System.out.println(link);
+        try {
+            String link = "";
+            for (int i = 0; i < 10; i++) {
+                if (i == 2 || i == 5 || i == 8) {
+                    link += (char) (97 + random.nextInt(26));
+                } else if (i == 0 || i == 3 || i == 6 || i == 9) {
+                    link += (char) (65 + random.nextInt(26));
+                } else {
+                    link += (char) (48 + random.nextInt(10));
+                } // Fin If          
+            } // Fin For
+            String nombre, extension;
+            double tamaño;
+            nombre = NombreArchivo.getText();
+            extension = ExtensionArchivo.getSelectedItem().toString();
+            tamaño = Double.parseDouble(TamañoArchivo.getText());
+            String linkfinal = "dive.google.com/" + link;
+            Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
+            MiUnidad.add(arch);
+            aa = new AdminArchivo("./Almacenimiento.mc");
+            aa.cargarArchivo();
+            aa.SetArchivo(arch);
+            aa.escribirArchivo();
+            JOptionPane.showMessageDialog(null, "Archivo creado exitosamente");
+            NombreArchivo.setText("");
+            ExtensionArchivo.setSelectedIndex(0);
+            TamañoArchivo.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
     }//GEN-LAST:event_BotonArchivoIndependienteMouseClicked
 
     private void BotonMeterArchivoCarpetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMeterArchivoCarpetaMouseClicked
         // TODO add your handling code here:
+        try {
+            String nombre, nombrecarp, extension;
+            double tamaño;
+            nombre = NombreArchivo.getText();
+            extension = ExtensionArchivo.getSelectedItem().toString();
+            tamaño = Double.parseDouble(TamañoArchivo.getText());
+            carpetaselected = (Carpeta) CBCarpetasA.getSelectedItem();
+            String link = "";
+            for (int i = 0; i < 10; i++) {
+                if (i == 2 || i == 5 || i == 8) {
+                    link += (char) (97 + random.nextInt(26));
+                } else if (i == 0 || i == 3 || i == 6 || i == 9) {
+                    link += (char) (65 + random.nextInt(26));
+                } else {
+                    link += (char) (48 + random.nextInt(10));
+                } // Fin If          
+            } // Fin For
+            nombrecarp = carpetaselected.getNombre();
+            String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
+            Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
+            carpetaselected.SetArchivo(arch);
+            MiUnidad.add(arch);
+            aa = new AdminArchivo("./Almacenimiento.mc");
+            aa.cargarArchivo();
+            aa.SetArchivo(arch);
+            aa.escribirArchivo();
+            JOptionPane.showMessageDialog(null, "Archivo creado exitosamente");
+            NombreArchivo.setText("");
+            ExtensionArchivo.setSelectedIndex(0);
+            TamañoArchivo.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
     }//GEN-LAST:event_BotonMeterArchivoCarpetaMouseClicked
 
     private void MenuMiUnidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMiUnidadMouseClicked
@@ -276,6 +444,45 @@ public class Inicio extends javax.swing.JFrame {
         } // Fin Try Catch
     }//GEN-LAST:event_MenuAgregarMouseClicked
 
+    private void BotonCrearCarpetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonCrearCarpetaMouseClicked
+        // TODO add your handling code here:
+        try {
+            String nombre;
+            nombre = NombreCarpeta.getText();
+            String link = "";
+            for (int i = 0; i < 5; i++) {
+                if (i == 0 || i == 4) {
+                    link += (char) (97 + random.nextInt(26));
+                } else if (i == 1 || i == 3) {
+                    link += (char) (65 + random.nextInt(26));
+                } else {
+                    link += (char) (48 + random.nextInt(10));
+                } // Fin If          
+            } // Fin For
+            String linkfinal = "dive.google.com/" + link;
+            Carpeta carp = new Carpeta(nombre, linkfinal);
+            DefaultComboBoxModel car = (DefaultComboBoxModel) CBCarpetasC.getModel();
+            DefaultComboBoxModel car2 = (DefaultComboBoxModel) CBCarpetasA.getModel();
+            car.addElement(carp);
+            car.addElement(carp);
+            CBCarpetasC.setModel(car);
+            CBCarpetasA.setModel(car2);
+            MiUnidad.add(carp);
+            ac = new AdminCarpeta("./Almacenimiento.mc");
+            ac.cargarArchivo();
+            ac.SetCarpeta(carp);
+            ac.escribirArchivo();
+            JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
+            NombreCarpeta.setText("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_BotonCrearCarpetaMouseClicked
+
+    private void BotonMeterCarpetaACarpetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMeterCarpetaACarpetaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonMeterCarpetaACarpetaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -290,16 +497,24 @@ public class Inicio extends javax.swing.JFrame {
                 if ("Windows Classic".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Inicio.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -314,7 +529,11 @@ public class Inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar BarraCargar;
     private javax.swing.JButton BotonArchivoIndependiente;
+    private javax.swing.JButton BotonCrearCarpeta;
     private javax.swing.JButton BotonMeterArchivoCarpeta;
+    private javax.swing.JButton BotonMeterCarpetaACarpeta;
+    private javax.swing.JComboBox<String> CBCarpetasA;
+    private javax.swing.JComboBox<String> CBCarpetasC;
     private javax.swing.JComboBox<String> ExtensionArchivo;
     private javax.swing.JMenu MenuAgregar;
     private javax.swing.JMenu MenuDestacados;
@@ -325,14 +544,26 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField TamañoArchivo;
     private javax.swing.JFrame VentanaAgregar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-private ArrayList<Archivo> miunidad = new ArrayList();
+private ArrayList MiUnidad = new ArrayList();
+    private AdminArchivo aa;
+    private AdminCarpeta ac;
+    private Carpeta carpetaselected;
+
 }

@@ -62,7 +62,7 @@ public class AdminCarpeta {
                 }
                 objeto.close();
                 entrada.close();
-            }          
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
