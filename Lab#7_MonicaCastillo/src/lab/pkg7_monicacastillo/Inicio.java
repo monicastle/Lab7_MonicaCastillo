@@ -63,11 +63,16 @@ public class Inicio extends javax.swing.JFrame {
         CBCarpetasC = new javax.swing.JComboBox<>();
         BotonMeterCarpetaACarpeta = new javax.swing.JButton();
         BotonRegresar = new javax.swing.JButton();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
+        PopUpMenu = new javax.swing.JPopupMenu();
+        AgregarFavorito = new javax.swing.JMenuItem();
+        AgregarPapelera = new javax.swing.JMenuItem();
+        Descargar = new javax.swing.JMenuItem();
+        Restablecer = new javax.swing.JMenuItem();
+        EliminarObjeto = new javax.swing.JMenuItem();
         BarraCargar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         Lista = new javax.swing.JList<>();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        MenuBar = new javax.swing.JMenuBar();
         MenuMiUnidad = new javax.swing.JMenu();
         MenuDestacados = new javax.swing.JMenu();
         MenuPapelera = new javax.swing.JMenu();
@@ -277,6 +282,36 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        AgregarFavorito.setText("Agregar a Favoritos");
+        AgregarFavorito.setEnabled(false);
+        AgregarFavorito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarFavoritoActionPerformed(evt);
+            }
+        });
+        PopUpMenu.add(AgregarFavorito);
+
+        AgregarPapelera.setText("Mover a Papelera");
+        AgregarPapelera.setEnabled(false);
+        PopUpMenu.add(AgregarPapelera);
+
+        Descargar.setText("Descargar Objeto");
+        Descargar.setEnabled(false);
+        PopUpMenu.add(Descargar);
+
+        Restablecer.setText("Restablecer Objeto");
+        Restablecer.setEnabled(false);
+        Restablecer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestablecerActionPerformed(evt);
+            }
+        });
+        PopUpMenu.add(Restablecer);
+
+        EliminarObjeto.setText("Eliminar Objeto");
+        EliminarObjeto.setEnabled(false);
+        PopUpMenu.add(EliminarObjeto);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         BarraCargar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -285,6 +320,11 @@ public class Inicio extends javax.swing.JFrame {
         BarraCargar.setStringPainted(true);
 
         Lista.setModel(new DefaultListModel());
+        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Lista);
 
         MenuMiUnidad.setText("Mi Unidad");
@@ -293,7 +333,7 @@ public class Inicio extends javax.swing.JFrame {
                 MenuMiUnidadMouseClicked(evt);
             }
         });
-        jMenuBar1.add(MenuMiUnidad);
+        MenuBar.add(MenuMiUnidad);
 
         MenuDestacados.setText("Destacados");
         MenuDestacados.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -301,7 +341,7 @@ public class Inicio extends javax.swing.JFrame {
                 MenuDestacadosMouseClicked(evt);
             }
         });
-        jMenuBar1.add(MenuDestacados);
+        MenuBar.add(MenuDestacados);
 
         MenuPapelera.setText("Papelera");
         MenuPapelera.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -309,7 +349,7 @@ public class Inicio extends javax.swing.JFrame {
                 MenuPapeleraMouseClicked(evt);
             }
         });
-        jMenuBar1.add(MenuPapelera);
+        MenuBar.add(MenuPapelera);
 
         MenuAgregar.setText("Agregar");
         MenuAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -317,9 +357,9 @@ public class Inicio extends javax.swing.JFrame {
                 MenuAgregarMouseClicked(evt);
             }
         });
-        jMenuBar1.add(MenuAgregar);
+        MenuBar.add(MenuAgregar);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,9 +369,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BarraCargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 419, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -416,7 +454,6 @@ public class Inicio extends javax.swing.JFrame {
             au.setObject(arch);
             au.escribirArchivo();
             carpetaselected.SetArchivo(arch);
-            MiUnidad.add(arch);
             NombreArchivo.setText("");
             ExtensionArchivo.setSelectedIndex(0);
             TamañoArchivo.setText("");
@@ -429,8 +466,9 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             BarraCargar.setString("Mi Unidad");
-            DefaultComboBoxModel list = (DefaultComboBoxModel) Lista.getModel();
+            au = new AdminMiUnidad("./MiUnidad.mc");
             au.cargarArchivo();
+            DefaultListModel list = new DefaultListModel();
             for (Object ob : au.getObjetos()) {
                 list.addElement(ob);
             }
@@ -444,6 +482,13 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             BarraCargar.setString("Destacados");
+            ad = new AdminDestacado("./Destacados.mc");
+            ad.cargarArchivo();
+            DefaultListModel list = new DefaultListModel();
+            for (Object ob : ad.getObjetos()) {
+                list.addElement(ob);
+            } // Fin For
+            Lista.setModel(list);
         } catch (Exception e) {
             e.printStackTrace();
         } // Fin Try Catch
@@ -492,18 +537,21 @@ public class Inicio extends javax.swing.JFrame {
             ac.cargarArchivo();
             ac.SetCarpeta(carp);
             ac.escribirArchivo();
-            DefaultComboBoxModel car = (DefaultComboBoxModel) CBCarpetasC.getModel();
-            DefaultComboBoxModel car2 = (DefaultComboBoxModel) CBCarpetasA.getModel();
-            car.addElement(carp);
-            car2.addElement(carp);
-            CBCarpetasC.setModel(car);
-            CBCarpetasA.setModel(car2);
-            MiUnidad.add(carp);
-            JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
             au = new AdminMiUnidad("./MiUnidad.mc");
             au.cargarArchivo();
             au.setObject(carp);
             au.escribirArchivo();
+            DefaultComboBoxModel car = new DefaultComboBoxModel();
+            DefaultComboBoxModel car2 = new DefaultComboBoxModel();
+            for (Object ob : au.getObjetos()) {
+                if (ob instanceof Carpeta) {
+                    car.addElement(ob);
+                    car2.addElement(ob);
+                }
+            }
+            CBCarpetasC.setModel(car);
+            CBCarpetasA.setModel(car2);
+            JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
             NombreCarpeta.setText("");
         } catch (Exception e) {
             e.printStackTrace();
@@ -531,7 +579,6 @@ public class Inicio extends javax.swing.JFrame {
             String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
             Carpeta carp = new Carpeta(nombre, linkfinal);
             carpetaselected.SetCarpeta(carp);
-            MiUnidad.add(carp);
             ac = new AdminCarpeta("./Almacenimiento.mc");
             ac.cargarArchivo();
             ac.SetCarpeta(carp);
@@ -556,6 +603,67 @@ public class Inicio extends javax.swing.JFrame {
             e.printStackTrace();
         } // Fin Try Catch
     }//GEN-LAST:event_BotonRegresarMouseClicked
+
+    private void AgregarFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarFavoritoActionPerformed
+        // TODO add your handling code here:
+        try {
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.getObjetos().remove(Lista.getSelectedIndex());
+            au.escribirArchivo();
+            DefaultListModel modelo = (DefaultListModel) Lista.getModel();
+            Object ob = modelo.getElementAt(Lista.getSelectedIndex());
+            ad = new AdminDestacado("./Destacados.mc");
+            ad.cargarArchivo();
+            ad.setObject(ob);
+            ad.escribirArchivo();
+            modelo.remove(Lista.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "¡Objeto agregado a destacados exitosamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_AgregarFavoritoActionPerformed
+
+    private void ListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMouseClicked
+        // TODO add your handling code here:
+        try {
+            if (Lista.getSelectedIndex() >= 0) {
+                if (evt.isMetaDown()) {
+                    if (MenuMiUnidad.isShowing()) {
+                        PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                        AgregarFavorito.setEnabled(true);
+                        AgregarPapelera.setEnabled(true);
+                        Descargar.setEnabled(true);
+                        Restablecer.setEnabled(false);
+                        EliminarObjeto.setEnabled(false);
+                        PopUpMenu.setEnabled(false);
+                    } else if (MenuDestacados.isShowing()) {
+                        PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                        AgregarFavorito.setEnabled(false);
+                        AgregarPapelera.setEnabled(true);
+                        Descargar.setEnabled(false);
+                        Restablecer.setEnabled(false);
+                        EliminarObjeto.setEnabled(false);
+                        PopUpMenu.setEnabled(false);
+                    } else if (MenuPapelera.isShowing()) {
+                        PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+                        AgregarFavorito.setEnabled(false);
+                        AgregarPapelera.setEnabled(false);
+                        Descargar.setEnabled(false);
+                        Restablecer.setEnabled(true);
+                        EliminarObjeto.setEnabled(true);
+                        PopUpMenu.setEnabled(false);
+                    } // Fin If
+                } // Fin If
+            } // Fin If
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_ListaMouseClicked
+
+    private void RestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestablecerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RestablecerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -601,6 +709,8 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AgregarFavorito;
+    private javax.swing.JMenuItem AgregarPapelera;
     private javax.swing.JProgressBar BarraCargar;
     private javax.swing.JButton BotonArchivoIndependiente;
     private javax.swing.JButton BotonCrearCarpeta;
@@ -609,14 +719,19 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JButton BotonRegresar;
     private javax.swing.JComboBox<String> CBCarpetasA;
     private javax.swing.JComboBox<String> CBCarpetasC;
+    private javax.swing.JMenuItem Descargar;
+    private javax.swing.JMenuItem EliminarObjeto;
     private javax.swing.JComboBox<String> ExtensionArchivo;
     private javax.swing.JList<String> Lista;
     private javax.swing.JMenu MenuAgregar;
+    private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu MenuDestacados;
     private javax.swing.JMenu MenuMiUnidad;
     private javax.swing.JMenu MenuPapelera;
     private javax.swing.JTextField NombreArchivo;
     private javax.swing.JTextField NombreCarpeta;
+    private javax.swing.JPopupMenu PopUpMenu;
+    private javax.swing.JMenuItem Restablecer;
     private javax.swing.JFormattedTextField TamañoArchivo;
     private javax.swing.JFrame VentanaAgregar;
     private javax.swing.JLabel jLabel1;
@@ -633,14 +748,12 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-private ArrayList MiUnidad = new ArrayList();
-    private AdminArchivo aa;
+  private AdminArchivo aa;
     private AdminCarpeta ac;
     private AdminMiUnidad au;
+    private AdminDestacado ad;
     private Carpeta carpetaselected;
 
 }

@@ -70,6 +70,7 @@ public class Carpeta implements Serializable {
 
     @Override
     public String toString() {
-        return "Nombre: " + nombre;
+        return "Carpeta[" + "Nombre: " + nombre + ", Link: " + link + ", Archivos: " + archivos + ", carpetas: " + carpetas + ']';
     }
+
 }
