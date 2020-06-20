@@ -293,10 +293,20 @@ public class Inicio extends javax.swing.JFrame {
 
         AgregarPapelera.setText("Mover a Papelera");
         AgregarPapelera.setEnabled(false);
+        AgregarPapelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarPapeleraActionPerformed(evt);
+            }
+        });
         PopUpMenu.add(AgregarPapelera);
 
         Descargar.setText("Descargar Objeto");
         Descargar.setEnabled(false);
+        Descargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DescargarActionPerformed(evt);
+            }
+        });
         PopUpMenu.add(Descargar);
 
         Restablecer.setText("Restablecer Objeto");
@@ -310,6 +320,11 @@ public class Inicio extends javax.swing.JFrame {
 
         EliminarObjeto.setText("Eliminar Objeto");
         EliminarObjeto.setEnabled(false);
+        EliminarObjeto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarObjetoActionPerformed(evt);
+            }
+        });
         PopUpMenu.add(EliminarObjeto);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -498,6 +513,13 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             BarraCargar.setString("Papelera");
+            ap = new AdminPapelera("./Papelera.mc");
+            ap.cargarArchivo();
+            DefaultListModel list = new DefaultListModel();
+            for (Object ob : ap.getObjetos()) {
+                list.addElement(ob);
+            } // Fin For
+            Lista.setModel(list);
         } catch (Exception e) {
             e.printStackTrace();
         } // Fin Try Catch
@@ -629,7 +651,7 @@ public class Inicio extends javax.swing.JFrame {
         try {
             if (Lista.getSelectedIndex() >= 0) {
                 if (evt.isMetaDown()) {
-                    if (MenuMiUnidad.isShowing()) {
+                    if (BarraCargar.getString().equals("Mi Unidad")) {
                         PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
                         AgregarFavorito.setEnabled(true);
                         AgregarPapelera.setEnabled(true);
@@ -637,7 +659,7 @@ public class Inicio extends javax.swing.JFrame {
                         Restablecer.setEnabled(false);
                         EliminarObjeto.setEnabled(false);
                         PopUpMenu.setEnabled(false);
-                    } else if (MenuDestacados.isShowing()) {
+                    } else if (BarraCargar.getString().equals("Destacados")) {
                         PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
                         AgregarFavorito.setEnabled(false);
                         AgregarPapelera.setEnabled(true);
@@ -645,7 +667,7 @@ public class Inicio extends javax.swing.JFrame {
                         Restablecer.setEnabled(false);
                         EliminarObjeto.setEnabled(false);
                         PopUpMenu.setEnabled(false);
-                    } else if (MenuPapelera.isShowing()) {
+                    } else if (BarraCargar.getString().equals("Papelera")) {
                         PopUpMenu.show(evt.getComponent(), evt.getX(), evt.getY());
                         AgregarFavorito.setEnabled(false);
                         AgregarPapelera.setEnabled(false);
@@ -664,6 +686,61 @@ public class Inicio extends javax.swing.JFrame {
     private void RestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestablecerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RestablecerActionPerformed
+
+    private void AgregarPapeleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarPapeleraActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (BarraCargar.getString().equals("Mi Unidad")) {
+                au = new AdminMiUnidad("./MiUnidad.mc");
+                au.cargarArchivo();
+                au.getObjetos().remove(Lista.getSelectedIndex());
+                au.escribirArchivo();
+                DefaultListModel modelo = (DefaultListModel) Lista.getModel();
+                Object ob = modelo.getElementAt(Lista.getSelectedIndex());
+                ap = new AdminPapelera("./Papelera.mc");
+                ap.cargarArchivo();
+                ap.setObject(ob);
+                ap.escribirArchivo();
+                modelo.remove(Lista.getSelectedIndex());
+                JOptionPane.showMessageDialog(null, "¡Objeto agregado a la papelera exitosamente!");
+            } else if (BarraCargar.getString().equals("Destacados")) {
+                ad = new AdminDestacado("./Destacados.mc");
+                ad.cargarArchivo();
+                ad.getObjetos().remove(Lista.getSelectedIndex());
+                ad.escribirArchivo();
+                DefaultListModel modelo = (DefaultListModel) Lista.getModel();
+                Object ob = modelo.getElementAt(Lista.getSelectedIndex());
+                ap = new AdminPapelera("./Papelera.mc");
+                ap.cargarArchivo();
+                ap.setObject(ob);
+                ap.escribirArchivo();
+                modelo.remove(Lista.getSelectedIndex());
+                JOptionPane.showMessageDialog(null, "¡Objeto agregado a la papelera exitosamente!");
+            } // Fin If
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_AgregarPapeleraActionPerformed
+
+    private void DescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DescargarActionPerformed
+
+    private void EliminarObjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarObjetoActionPerformed
+        // TODO add your handling code here:
+        try {
+            DefaultListModel modelo = (DefaultListModel) Lista.getModel();
+            Object ob = modelo.getElementAt(Lista.getSelectedIndex());
+            ap = new AdminPapelera("./Papelera.mc");
+            ap.cargarArchivo();
+            ap.getObjetos().remove(Lista.getSelectedIndex());
+            ap.escribirArchivo();
+            modelo.remove(Lista.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "¡Objeto eliminado exitosamente!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
+    }//GEN-LAST:event_EliminarObjetoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -754,6 +831,7 @@ public class Inicio extends javax.swing.JFrame {
     private AdminCarpeta ac;
     private AdminMiUnidad au;
     private AdminDestacado ad;
+    private AdminPapelera ap;
     private Carpeta carpetaselected;
 
 }

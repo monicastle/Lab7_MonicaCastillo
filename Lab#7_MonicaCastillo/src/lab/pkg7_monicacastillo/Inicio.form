@@ -374,12 +374,18 @@
             <Property name="text" type="java.lang.String" value="Mover a Papelera"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AgregarPapeleraActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="Descargar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Descargar Objeto"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DescargarActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="Restablecer">
           <Properties>
@@ -395,6 +401,9 @@
             <Property name="text" type="java.lang.String" value="Eliminar Objeto"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EliminarObjetoActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
