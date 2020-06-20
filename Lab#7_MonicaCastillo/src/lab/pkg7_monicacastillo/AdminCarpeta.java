@@ -49,6 +49,10 @@ public class AdminCarpeta {
         this.listacarpetas.add(c);
     }
 
+    public void RemoveCarpeta(Carpeta c) {
+        this.listacarpetas.remove(c);
+    }
+
     public void cargarArchivo() {
         try {
             listacarpetas = new ArrayList();

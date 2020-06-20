@@ -46,6 +46,10 @@ public class AdminMiUnidad {
         this.objetos.add(o);
     }
 
+    public void RemoveObject(Object o) {
+        this.objetos.remove(o);
+    }
+
     public void cargarArchivo() {
         try {
             objetos = new ArrayList();

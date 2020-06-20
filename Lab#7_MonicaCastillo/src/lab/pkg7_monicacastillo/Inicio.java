@@ -72,6 +72,8 @@ public class Inicio extends javax.swing.JFrame {
         BarraCargar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         Lista = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         MenuBar = new javax.swing.JMenuBar();
         MenuMiUnidad = new javax.swing.JMenu();
         MenuDestacados = new javax.swing.JMenu();
@@ -342,6 +344,24 @@ public class Inicio extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Lista);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Link", "Tamaño"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
         MenuMiUnidad.setText("Mi Unidad");
         MenuMiUnidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -384,7 +404,10 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BarraCargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -393,7 +416,9 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(BarraCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -419,7 +444,7 @@ public class Inicio extends javax.swing.JFrame {
             extension = ExtensionArchivo.getSelectedItem().toString();
             tamaño = Double.parseDouble(TamañoArchivo.getText());
             String linkfinal = "dive.google.com/" + link;
-            Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
+            arch = new Archivo(nombre, linkfinal, extension, tamaño);
             aa = new AdminArchivo("./Almacenimiento.mc");
             aa.cargarArchivo();
             aa.SetArchivo(arch);
@@ -458,17 +483,30 @@ public class Inicio extends javax.swing.JFrame {
             } // Fin For
             nombrecarp = carpetaselected.getNombre();
             String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
-            Archivo arch = new Archivo(nombre, linkfinal, extension, tamaño);
+            arch = new Archivo(nombre, linkfinal, extension, tamaño);
+            ac = new AdminCarpeta("./Almacenimiento.mc");
+            ac.cargarArchivo();
+            ac.RemoveCarpeta(carpetaselected);
+            ac.escribirArchivo();
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.RemoveObject(carpetaselected);
+            au.escribirArchivo();
+            carpetaselected.SetArchivo(arch);
             aa = new AdminArchivo("./Almacenimiento.mc");
             aa.cargarArchivo();
             aa.SetArchivo(arch);
             aa.escribirArchivo();
+            ac = new AdminCarpeta("./Almacenimiento.mc");
+            ac.cargarArchivo();
+            ac.SetCarpeta(carpetaselected);
+            ac.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Archivo creado exitosamente");
             au = new AdminMiUnidad("./MiUnidad.mc");
             au.cargarArchivo();
-            au.setObject(arch);
+            au.RemoveObject(carpetaselected);
+            au.setObject(carpetaselected);
             au.escribirArchivo();
-            carpetaselected.SetArchivo(arch);
             NombreArchivo.setText("");
             ExtensionArchivo.setSelectedIndex(0);
             TamañoArchivo.setText("");
@@ -486,7 +524,7 @@ public class Inicio extends javax.swing.JFrame {
             DefaultListModel list = new DefaultListModel();
             for (Object ob : au.getObjetos()) {
                 list.addElement(ob);
-            }
+            } // Fin For
             Lista.setModel(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -554,7 +592,7 @@ public class Inicio extends javax.swing.JFrame {
                 } // Fin If          
             } // Fin For
             String linkfinal = "dive.google.com/" + link;
-            Carpeta carp = new Carpeta(nombre, linkfinal);
+            carp = new Carpeta(nombre, linkfinal);
             ac = new AdminCarpeta("./Almacenimiento.mc");
             ac.cargarArchivo();
             ac.SetCarpeta(carp);
@@ -569,8 +607,8 @@ public class Inicio extends javax.swing.JFrame {
                 if (ob instanceof Carpeta) {
                     car.addElement(ob);
                     car2.addElement(ob);
-                }
-            }
+                } // Fin If
+            } // Fin For
             CBCarpetasC.setModel(car);
             CBCarpetasA.setModel(car2);
             JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
@@ -598,17 +636,25 @@ public class Inicio extends javax.swing.JFrame {
             } // Fin For
             String nombrecarp;
             nombrecarp = carpetaselected.getNombre();
+            ac = new AdminCarpeta("./Almacenimiento.mc");
+            ac.cargarArchivo();
+            ac.RemoveCarpeta(carpetaselected);
+            ac.escribirArchivo();
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.RemoveObject(carpetaselected);
+            au.escribirArchivo();
             String linkfinal = "dive.google.com/" + nombrecarp + "/" + link;
-            Carpeta carp = new Carpeta(nombre, linkfinal);
+            carp = new Carpeta(nombre, linkfinal);
             carpetaselected.SetCarpeta(carp);
             ac = new AdminCarpeta("./Almacenimiento.mc");
             ac.cargarArchivo();
-            ac.SetCarpeta(carp);
+            ac.SetCarpeta(carpetaselected);
             ac.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Carpeta creada exitosamente");
             au = new AdminMiUnidad("./MiUnidad.mc");
             au.cargarArchivo();
-            au.setObject(carp);
+            au.setObject(carpetaselected);
             au.escribirArchivo();
             NombreCarpeta.setText("");
         } catch (Exception e) {
@@ -685,6 +731,37 @@ public class Inicio extends javax.swing.JFrame {
 
     private void RestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RestablecerActionPerformed
         // TODO add your handling code here:
+        try {
+            // Reestablece a Mi Unidad
+            DefaultListModel modelo = (DefaultListModel) Lista.getModel();
+            Object ob = modelo.getElementAt(Lista.getSelectedIndex());
+            ap = new AdminPapelera("./Papelera.mc");
+            ap.cargarArchivo();
+            ap.getObjetos().remove(Lista.getSelectedIndex());
+            ap.escribirArchivo();
+            au = new AdminMiUnidad("./MiUnidad.mc");
+            au.cargarArchivo();
+            au.setObject(modelo.getElementAt(Lista.getSelectedIndex()));
+            au.escribirArchivo();
+            modelo.remove(Lista.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "¡Objeto reestablecido exitosamente!");
+            // Reestablece a Destacados
+            /*DefaultListModel modelo2 = (DefaultListModel) Lista.getModel();
+            Object ob2 = modelo2.getElementAt(Lista.getSelectedIndex());
+            ap = new AdminPapelera("./Papelera.mc");
+            ap.cargarArchivo();
+            ap.getObjetos().remove(Lista.getSelectedIndex());
+            ap.escribirArchivo();
+            ad = new AdminDestacado("./Destacados.mc");
+            ad.cargarArchivo();
+            ad.setObject(modelo2.getElementAt(Lista.getSelectedIndex()));
+            ad.escribirArchivo();
+            modelo2.remove(Lista.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "¡Objeto reestablecido exitosamente!");*/
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } // Fin Try Catch
     }//GEN-LAST:event_RestablecerActionPerformed
 
     private void AgregarPapeleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarPapeleraActionPerformed
@@ -826,6 +903,8 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
   private AdminArchivo aa;
     private AdminCarpeta ac;
@@ -833,5 +912,6 @@ public class Inicio extends javax.swing.JFrame {
     private AdminDestacado ad;
     private AdminPapelera ap;
     private Carpeta carpetaselected;
-
+    private Archivo arch;
+    private Carpeta carp;
 }
